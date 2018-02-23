@@ -1,0 +1,5 @@
+name: KitPvP
+author: ItsAloof
+version: 0.0.1B-001
+main: com.itsaloof.kitpvp.KitPvPPlugin
+depend: [Vault]
