@@ -28,23 +28,31 @@ public class CPlayer {
 		{
 			f = new File(pl.folder, player.getUniqueId() + ".yml");
 		}
+		testObject();
 	}
 	
 	private boolean checkPlayer(Player player)
 	{
-		for(File f : new File(pl.getDataFolder(), "PlayerData").listFiles())
+		if(pl.getFolder().listFiles().length > 0)
 		{
-			if(f.getName().contains(player.getUniqueId().toString()))
+			for(File f : pl.getFolder().listFiles())
 			{
-				this.f = f;
-				loadData(f);
-				return true;
-			}else
-			{
+				if(f.getName().contains(player.getUniqueId().toString()))
+				{
+					this.f = f;
+					loadData(f);
+					return true;
+				}else
+				{
 				continue;
+				}
 			}
-		}
+			
+			return false;
+		}else
+		{
 		return false;
+		}
 	}
 	
 	private void loadData(File f)
@@ -104,7 +112,7 @@ public class CPlayer {
 	{
 		if(!pl.getDataFolder().exists())
 		{
-			pl.createFiles();
+			pl.getDataFolder().mkdir();
 		}
 		if(!f.exists())
 		{
@@ -144,5 +152,13 @@ public class CPlayer {
 	public boolean compMode()
 	{
 		return compMode;
+	}
+	
+	private void testObject()
+	{
+		System.out.println("\n\nSuccessfully loaded player " + p.getName() + "'s file current stats are: ");
+		System.out.println("Kills: " + kills);
+		System.out.println("Deaths: " + deaths);
+		System.out.println("File Location: " + f.getAbsolutePath().toString() + "\n\n");
 	}
 }

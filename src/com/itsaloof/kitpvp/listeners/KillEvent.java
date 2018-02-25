@@ -24,6 +24,9 @@ public class KillEvent implements Listener{
 	@EventHandler
 	public void onKill(PlayerDeathEvent e)
 	{
+		if(e.getEntity().getKiller() == null)
+			return;
+		
 		Player killer = e.getEntity().getKiller();
 		Player player = e.getEntity().getPlayer();
 		
@@ -35,8 +38,8 @@ public class KillEvent implements Listener{
 			pk.addKills(1);
 			pp.addDeaths(1);
 		}
-		
-		rewardKiller(killer, player);
+		if(killer != null)
+			rewardKiller(killer, player);
 		
 	}
 	
