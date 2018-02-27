@@ -20,7 +20,6 @@ import com.itsaloof.kitpvp.utils.CPlayer;
 import net.milkbowl.vault.economy.Economy;
 
 public class KitPvPPlugin extends JavaPlugin {
-	public File folder;
 	
 	public HashMap<Player, CPlayer> players = new HashMap<Player, CPlayer>();
 	public List<Player> noFall = new ArrayList<Player>();
@@ -57,8 +56,7 @@ public class KitPvPPlugin extends JavaPlugin {
 			File f = new File(getDataFolder(), "PlayerData");
 			if(!f.exists())
 			{
-				f.mkdirs();
-				this.folder = f;
+				f.mkdir();
 			}
 		}
 		setupEconomy();
@@ -79,7 +77,14 @@ public class KitPvPPlugin extends JavaPlugin {
 	
 	public File getFolder()
 	{
-		return new File(getDataFolder(), "PlayerData");
+		if(getDataFolder().exists())
+		{
+			return new File(getDataFolder(), "PlayerData");
+		}else
+		{
+			createFiles();
+			return new File(getDataFolder(), "PlayerData");
+		}
 	}
 	
 

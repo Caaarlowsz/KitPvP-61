@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import com.itsaloof.kitpvp.KitPvPPlugin;
@@ -33,7 +34,8 @@ public class PressurePlateEvent implements Listener{
 	    Material plate = playerLoc.getWorld().getBlockAt(playerLoc).getType();
 	    if ((player instanceof Player))
 	    {
-	      if (ID.getType() == Material.getMaterial(pl.getConfig().getString("launchpad.type")) && ID.getState().getRawData() >= 0 && ID.getState().getRawData() <= 3) 
+	    	byte b = ID.getState().getRawData();
+	      if (ID.getType() == Material.getMaterial(pl.getConfig().getString("launchpad.type")) && (b == 1 || b == 4 || b == 9 || b == 13)) 
 	      {
 	      if (plate == Material.getMaterial(pl.getConfig().getString("launchpad.plate")))
 	      	{
@@ -41,11 +43,30 @@ public class PressurePlateEvent implements Listener{
 		      player.setVelocity(new Vector(player.getVelocity().getX(), 1.0D, player.getVelocity().getZ()));
 		      if(!pl.noFall.contains(player))
 		    	  pl.noFall.add(player);
+		      timer(player);
 	      	}
 	      
 	      }
 	    }
 	  }
+	 
+	 private void timer(Player p)
+	 {
+		 BukkitRunnable br = new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				if(pl.noFall.contains(p))
+				{
+					pl.noFall.remove(p);
+					return;
+				}
+				else
+					return;
+			}
+		};
+		br.runTaskLater(pl, 100L);
+	 }
 	 
 	 @EventHandler
 	 public void onFall(EntityDamageEvent e)

@@ -26,7 +26,7 @@ public class CPlayer {
 		
 		if(!checkPlayer(player))
 		{
-			f = new File(pl.folder, player.getUniqueId() + ".yml");
+			f = new File(pl.getFolder(), player.getUniqueId() + ".yml");
 		}
 		testObject();
 	}
@@ -117,11 +117,11 @@ public class CPlayer {
 		if(!f.exists())
 		{
 			try {
-				f = new File(pl.folder, p.getUniqueId().toString() + ".yml");
+				f = new File(pl.getFolder(), p.getUniqueId().toString() + ".yml");
 				f.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return;
 			}
 		}
 		FileConfiguration fc = YamlConfiguration.loadConfiguration(f);
@@ -129,11 +129,13 @@ public class CPlayer {
 		fc.set("Player.stats.kills", kills);
 		fc.set("Player.stats.deaths", deaths);
 		fc.set("Player.stats.skillpoints", sp);
+		fc.set("Player.file.location", this.f.getAbsolutePath());
+		fc.set("Player.name", p.getName());
 		try {
 			fc.save(f);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return;
 		}
 		
 	}
