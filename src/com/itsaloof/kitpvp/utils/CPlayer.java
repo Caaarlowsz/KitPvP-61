@@ -28,7 +28,6 @@ public class CPlayer {
 		{
 			f = new File(pl.getFolder(), player.getUniqueId() + ".yml");
 		}
-		testObject();
 	}
 	
 	private boolean checkPlayer(Player player)
