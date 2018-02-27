@@ -17,7 +17,7 @@ public class SignEvent implements Listener {
     @EventHandler
     public void onSign(SignChangeEvent e) {
         if (e.getLine(0).equalsIgnoreCase("[competitive]")) {
-            e.setLine(0, "§8[§6Competitive§8]");
+            e.setLine(0, "Â§8[Â§6CompetitiveÂ§8]");
             e.setLine(1, "Queued: 0");
         } else {
             return;
