@@ -86,6 +86,4 @@ public class KitPvPPlugin extends JavaPlugin {
 			return new File(getDataFolder(), "PlayerData");
 		}
 	}
-	
-
 }

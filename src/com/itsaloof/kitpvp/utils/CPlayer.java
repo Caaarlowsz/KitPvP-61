@@ -129,7 +129,6 @@ public class CPlayer {
 		fc.set("Player.stats.kills", kills);
 		fc.set("Player.stats.deaths", deaths);
 		fc.set("Player.stats.skillpoints", sp);
-		fc.set("Player.file.location", this.f.getAbsolutePath());
 		fc.set("Player.name", p.getName());
 		try {
 			fc.save(f);
@@ -137,9 +136,9 @@ public class CPlayer {
 			e.printStackTrace();
 			return;
 		}
-		
 	}
 	
+  
 	public void toggleCompMode()
 	{
 		if(compMode)
@@ -154,13 +153,5 @@ public class CPlayer {
 	public boolean compMode()
 	{
 		return compMode;
-	}
-	
-	private void testObject()
-	{
-		System.out.println("\n\nSuccessfully loaded player " + p.getName() + "'s file current stats are: ");
-		System.out.println("Kills: " + kills);
-		System.out.println("Deaths: " + deaths);
-		System.out.println("File Location: " + f.getAbsolutePath().toString() + "\n\n");
 	}
 }
