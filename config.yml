@@ -12,7 +12,5 @@ kill-rewards:
    - wither
    - confusion
 launchpad:
-  strength: 6
-  plate: STONE_PLATE
-  type: LOG
-  
+  material: STONE_PLATE
+  multiplier: 6
