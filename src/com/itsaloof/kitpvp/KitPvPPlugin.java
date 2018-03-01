@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.itsaloof.kitpvp.utils.LaunchpadUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -17,6 +16,7 @@ import com.itsaloof.kitpvp.listeners.KillEvent;
 import com.itsaloof.kitpvp.listeners.LaunchpadListener;
 import com.itsaloof.kitpvp.listeners.SignEvent;
 import com.itsaloof.kitpvp.utils.CPlayer;
+import com.itsaloof.kitpvp.utils.LaunchpadUtils;
 
 import net.milkbowl.vault.economy.Economy;
 
@@ -27,6 +27,7 @@ public class KitPvPPlugin extends JavaPlugin {
 	public static Economy econ = null;
 	public FileConfiguration config;
 	public final LaunchpadUtils launchpadUtils = new LaunchpadUtils(this);
+	public List<Player> queue = new ArrayList<Player>();
 
 	@Override
 	public void onEnable()

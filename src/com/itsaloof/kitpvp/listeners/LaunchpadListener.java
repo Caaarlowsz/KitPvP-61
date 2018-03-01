@@ -1,11 +1,8 @@
 package com.itsaloof.kitpvp.listeners;
 
-import com.itsaloof.kitpvp.KitPvPPlugin;
-import com.itsaloof.kitpvp.utils.LaunchpadUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +14,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+
+import com.itsaloof.kitpvp.KitPvPPlugin;
 
 public class LaunchpadListener implements Listener {
     private final KitPvPPlugin plugin;
@@ -79,14 +78,7 @@ public class LaunchpadListener implements Listener {
             }
         }
     }
-
-    @EventHandler
-    public void onNoFallDamageFromLaunch(final PlayerMoveEvent event) {
-        final Player player = event.getPlayer();
-        if (!this.plugin.launchpadUtils.isOnLaunchpad(player) && (((Entity) player).isOnGround() || LaunchpadUtils.getAdditionalGroundMaterials().contains(event.getFrom().getBlock().getRelative(BlockFace.DOWN).getType()))) {
-            this.plugin.launchpadUtils.endLaunch(player);
-        }
-    }
+    
 
     @EventHandler(ignoreCancelled = true)
     public void onLaunchpadSupportRemoved(final BlockPhysicsEvent event) {

@@ -1,15 +1,18 @@
 package com.itsaloof.kitpvp.utils;
 
-import com.itsaloof.kitpvp.api.enums.LaunchPhase;
-import com.itsaloof.kitpvp.api.events.LaunchEvent;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
+import com.itsaloof.kitpvp.api.enums.LaunchPhase;
+import com.itsaloof.kitpvp.api.events.LaunchEvent;
 
 public class LaunchpadUtils {
     private static final List<Material> additionalGroundMaterials = Arrays.asList(
@@ -23,8 +26,8 @@ public class LaunchpadUtils {
 
     );
     private final JavaPlugin plugin;
-    private final List<UUID> onLaunchpad = new ArrayList<>();
-    private final List<UUID> beingLaunched = new ArrayList<>();
+    private List<UUID> onLaunchpad = new ArrayList<>();
+    private List<UUID> beingLaunched = new ArrayList<>();
 
     public LaunchpadUtils(final JavaPlugin plugin) {
         this.plugin = plugin;
@@ -78,10 +81,6 @@ public class LaunchpadUtils {
         }
     }
 
-    private void setBeingLaunched(final Player player, boolean beingLaunched) {
-        this.setBeingLaunched(player.getUniqueId(), beingLaunched);
-    }
-
     public boolean startLaunch(final Player player) {
         final UUID uuid = player.getUniqueId();
         if (this.isBeingLaunched(uuid)) {
@@ -95,8 +94,18 @@ public class LaunchpadUtils {
             return false;
         }
 
-        player.setVelocity(player.getEyeLocation().getDirection().multiply(this.getMultiplier()));
+        player.setVelocity(player.getLocation().getDirection().multiply(this.getMultiplier()));
+        player.setVelocity(new Vector(player.getVelocity().getX(), 1.0D, player.getVelocity().getZ()));
         this.setBeingLaunched(uuid, true);
+        
+        new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				endLaunch(player);
+			}
+		}.runTaskLater(plugin, 200L);
+		
         return true;
     }
 
