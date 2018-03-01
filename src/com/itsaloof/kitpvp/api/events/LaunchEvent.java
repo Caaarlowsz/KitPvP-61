@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerEvent;
 public class LaunchEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final LaunchPhase launchPhase;
-    private boolean cancelled;
+    private boolean cancelled = false;
 
     public LaunchEvent(final Player player, final LaunchPhase launchPhase) {
         super(player);
@@ -20,14 +20,17 @@ public class LaunchEvent extends PlayerEvent implements Cancellable {
         return handlers;
     }
 
+    @Override
     public HandlerList getHandlers() {
         return handlers;
     }
 
+    @Override
     public boolean isCancelled() {
         return this.cancelled;
     }
 
+    @Override
     public void setCancelled(final boolean cancelled) {
         this.cancelled = cancelled;
     }
