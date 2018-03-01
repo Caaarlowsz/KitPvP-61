@@ -1,7 +1,5 @@
 package com.itsaloof.kitpvp.utils;
 
-import com.itsaloof.kitpvp.api.events.LaunchEndEvent;
-import com.itsaloof.kitpvp.api.events.LaunchStartEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -88,13 +86,6 @@ public class LaunchpadUtils {
             return false;
         }
 
-        final LaunchStartEvent event = new LaunchStartEvent(player);
-        this.plugin.getServer().getPluginManager().callEvent(event);
-
-        if (event.isCancelled()) {
-            return false;
-        }
-
         player.setVelocity(player.getEyeLocation().getDirection().multiply(this.getMultiplier()));
         this.setBeingLaunched(uuid, true);
         return true;
@@ -103,13 +94,6 @@ public class LaunchpadUtils {
     public boolean endLaunch(final Player player) {
         final UUID uuid = player.getUniqueId();
         if (!this.isBeingLaunched(uuid)) {
-            return false;
-        }
-
-        final LaunchEndEvent event = new LaunchEndEvent(player);
-        this.plugin.getServer().getPluginManager().callEvent(event);
-
-        if (event.isCancelled()) {
             return false;
         }
 
