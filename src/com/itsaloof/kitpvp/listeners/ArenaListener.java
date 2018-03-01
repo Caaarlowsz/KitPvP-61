@@ -30,6 +30,7 @@ public class ArenaListener implements Listener {
 	@EventHandler
 	public void onPlayerWin(PlayerWinEvent event)
 	{
+		
 	}
 
 }
