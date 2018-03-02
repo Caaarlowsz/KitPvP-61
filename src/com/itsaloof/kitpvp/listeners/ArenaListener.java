@@ -10,6 +10,7 @@ import com.itsaloof.kitpvp.utils.Arena;
 
 public class ArenaListener implements Listener {
 	
+	@SuppressWarnings("unused")
 	private final KitPvPPlugin plugin;
 	
 	public ArenaListener(final KitPvPPlugin plugin)

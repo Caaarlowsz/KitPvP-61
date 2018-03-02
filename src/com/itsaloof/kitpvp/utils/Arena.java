@@ -20,7 +20,7 @@ public class Arena {
 	private List<Player> players;
 	private String name;
 	private final int maxPlayers;
-	public Arena(KitPvPPlugin plugin, List<Location> spawns, String name ,int max ,List<Player> players)
+	public Arena(KitPvPPlugin plugin, List<Location> spawns, String name, int max)
 	{
 		this.plugin = plugin;
 		this.spawns = spawns;

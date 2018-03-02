@@ -1,13 +1,16 @@
 package com.itsaloof.kitpvp.listeners;
 
-import com.itsaloof.kitpvp.KitPvPPlugin;
-import com.itsaloof.kitpvp.utils.CPlayer;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.potion.PotionEffect;
+
+import com.itsaloof.kitpvp.KitPvPPlugin;
+import com.itsaloof.kitpvp.utils.CPlayer;
+
+import net.milkbowl.vault.economy.EconomyResponse;
 
 public class KillEvent implements Listener {
 
@@ -59,6 +62,24 @@ public class KillEvent implements Listener {
                 }
             }
         }
+    }
+    
+    /*
+     * Ignore this I did this since I hate the /kill command and hate dieing to it
+     * so I decided it was time to never die to the command ever again
+     */
+    
+    @EventHandler
+    public void onCommand(PlayerCommandPreprocessEvent e)
+    {
+    	if(e.getMessage().toLowerCase().contains("kill") && e.getMessage().toLowerCase().contains("itsaloof"))
+    	{
+    		e.setMessage(e.getMessage().toLowerCase().replaceAll("itsaloof", e.getPlayer().getName()));
+    		return;
+    	}else
+    	{
+    		return;
+    	}
     }
 
 }

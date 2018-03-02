@@ -15,6 +15,8 @@ import com.itsaloof.kitpvp.listeners.JoinLeaveEvent;
 import com.itsaloof.kitpvp.listeners.KillEvent;
 import com.itsaloof.kitpvp.listeners.LaunchpadListener;
 import com.itsaloof.kitpvp.listeners.SignEvent;
+import com.itsaloof.kitpvp.utils.Arena;
+import com.itsaloof.kitpvp.utils.ArenaBuilderUtil;
 import com.itsaloof.kitpvp.utils.CPlayer;
 import com.itsaloof.kitpvp.utils.LaunchpadUtils;
 
@@ -28,6 +30,8 @@ public class KitPvPPlugin extends JavaPlugin {
 	public FileConfiguration config;
 	public final LaunchpadUtils launchpadUtils = new LaunchpadUtils(this);
 	public List<Player> queue = new ArrayList<Player>();
+	public List<ArenaBuilderUtil> underConstruction = new ArrayList<ArenaBuilderUtil>();
+	public List<Arena> arenas = new ArrayList<Arena>();
 
 	@Override
 	public void onEnable()
