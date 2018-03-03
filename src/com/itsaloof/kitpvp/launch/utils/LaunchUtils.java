@@ -1,7 +1,7 @@
-package com.itsaloof.kitpvp.launchpad.utils;
+package com.itsaloof.kitpvp.launch.utils;
 
-import com.itsaloof.kitpvp.launchpad.enums.LaunchPhase;
-import com.itsaloof.kitpvp.launchpad.events.LaunchEvent;
+import com.itsaloof.kitpvp.launch.enums.LaunchPhase;
+import com.itsaloof.kitpvp.launch.events.LaunchEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,11 +35,11 @@ public class LaunchUtils {
     }
 
     public Material getMaterial() {
-        return Material.getMaterial(this.plugin.getConfig().getString("launchpad.material").toUpperCase());
+        return Material.getMaterial(this.plugin.getConfig().getString("launch.launchpad-material").toUpperCase());
     }
 
     public double getMultiplier() {
-        return this.plugin.getConfig().getDouble("launchpad.multiplier");
+        return this.plugin.getConfig().getDouble("launch.velocity-multiplier");
     }
 
     public boolean isOnLaunchpad(final UUID uuid) {

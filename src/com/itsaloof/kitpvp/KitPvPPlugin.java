@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.itsaloof.kitpvp.launchpad.utils.LaunchUtils;
+import com.itsaloof.kitpvp.launch.utils.LaunchUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.itsaloof.kitpvp.listeners.JoinLeaveEvent;
 import com.itsaloof.kitpvp.listeners.KillEvent;
-import com.itsaloof.kitpvp.launchpad.listeners.LaunchListener;
+import com.itsaloof.kitpvp.launch.listeners.LaunchListener;
 import com.itsaloof.kitpvp.listeners.SignEvent;
 import com.itsaloof.kitpvp.utils.CPlayer;
 

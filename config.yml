@@ -11,6 +11,6 @@ kill-rewards:
    - slow
    - wither
    - confusion
-launchpad:
-  material: STONE_PLATE
-  multiplier: 6
+launch:
+  launchpad-material: STONE_PLATE
+  velocity-multiplier: 6

@@ -1,7 +1,7 @@
-package com.itsaloof.kitpvp.launchpad.listeners;
+package com.itsaloof.kitpvp.launch.listeners;
 
 import com.itsaloof.kitpvp.KitPvPPlugin;
-import com.itsaloof.kitpvp.launchpad.utils.LaunchUtils;
+import com.itsaloof.kitpvp.launch.utils.LaunchUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
