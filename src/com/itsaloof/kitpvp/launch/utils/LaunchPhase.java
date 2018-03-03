@@ -1,4 +1,4 @@
-package com.itsaloof.kitpvp.launch.enums;
+package com.itsaloof.kitpvp.launch.utils;
 
 public enum LaunchPhase {
     START,
