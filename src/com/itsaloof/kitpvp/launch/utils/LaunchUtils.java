@@ -6,31 +6,16 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 public class LaunchUtils {
-    private static final List<Material> additionalGroundMaterials = Arrays.asList(
-            Material.LADDER,
-            Material.LAVA,
-            Material.STATIONARY_LAVA,
-            Material.STATIONARY_WATER,
-            Material.VINE,
-            Material.WATER
-            /* TODO: Add choice to include slime blocks in this list */
-
-    );
     private final KitPvPPlugin plugin;
     private final List<UUID> onLaunchpad = new ArrayList<>();
     private final List<UUID> beingLaunched = new ArrayList<>();
 
     public LaunchUtils(final KitPvPPlugin plugin) {
         this.plugin = plugin;
-    }
-
-    public static List<Material> getAdditionalGroundMaterials() {
-        return additionalGroundMaterials;
     }
 
     public Material getMaterial() {
