@@ -1,9 +1,9 @@
 package com.itsaloof.kitpvp.launch.utils;
 
+import com.itsaloof.kitpvp.KitPvPPlugin;
 import com.itsaloof.kitpvp.launch.events.LaunchEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,11 +21,11 @@ public class LaunchUtils {
             /* TODO: Add choice to include slime blocks in this list */
 
     );
-    private final JavaPlugin plugin;
+    private final KitPvPPlugin plugin;
     private final List<UUID> onLaunchpad = new ArrayList<>();
     private final List<UUID> beingLaunched = new ArrayList<>();
 
-    public LaunchUtils(final JavaPlugin plugin) {
+    public LaunchUtils(final KitPvPPlugin plugin) {
         this.plugin = plugin;
     }
 
