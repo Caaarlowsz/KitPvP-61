@@ -1,11 +1,9 @@
 package com.itsaloof.kitpvp.launch.listeners;
 
 import com.itsaloof.kitpvp.KitPvPPlugin;
-import com.itsaloof.kitpvp.launch.utils.LaunchUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,15 +22,6 @@ public class LaunchListener implements Listener {
     public LaunchListener(final KitPvPPlugin plugin) {
         this.plugin = plugin;
     }
-
-    /* The player's y-velocity cannot be set with this event unless they are falling into the launchpad.
-    @EventHandler
-    public void onTriggerLaunch(final PlayerInteractEvent event) {
-        if (event.getAction() == Action.PHYSICAL && event.getClickedBlock().getType() == this.plugin.launchUtils.getMaterial()) {
-            this.plugin.launchUtils.startLaunch(event.getPlayer());
-        }
-    }
-    */
 
     @EventHandler
     public void onTriggerLaunch(final PlayerMoveEvent event) {
@@ -77,14 +66,6 @@ public class LaunchListener implements Listener {
             if (this.plugin.launchUtils.endLaunch(player)) {
                 event.setCancelled(true);
             }
-        }
-    }
-
-    @EventHandler
-    public void onNoFallDamageFromLaunch(final PlayerMoveEvent event) {
-        final Player player = event.getPlayer();
-        if (!this.plugin.launchUtils.isOnLaunchpad(player) && (((Entity) player).isOnGround() || LaunchUtils.getAdditionalGroundMaterials().contains(event.getFrom().getBlock().getRelative(BlockFace.DOWN).getType()))) {
-            this.plugin.launchUtils.endLaunch(player);
         }
     }
 

@@ -41,6 +41,10 @@ public class LaunchUtils {
         return this.plugin.getConfig().getDouble("launch.velocity-multiplier");
     }
 
+    public long getCheckInterval() {
+        return this.plugin.getConfig().getLong("launch.launch-check-tick-interval");
+    }
+
     public boolean isOnLaunchpad(final UUID uuid) {
         return this.onLaunchpad.contains(uuid);
     }
@@ -96,6 +100,8 @@ public class LaunchUtils {
 
         player.setVelocity(player.getEyeLocation().getDirection().multiply(this.getMultiplier()));
         this.setBeingLaunched(uuid, true);
+        final LaunchCheckTask launchCheckTask = new LaunchCheckTask(this.plugin, event);
+        launchCheckTask.begin();
         return true;
     }
 
