@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.itsaloof.kitpvp.utils.LaunchpadUtils;
+import com.itsaloof.kitpvp.launchpad.utils.LaunchUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.itsaloof.kitpvp.listeners.JoinLeaveEvent;
 import com.itsaloof.kitpvp.listeners.KillEvent;
-import com.itsaloof.kitpvp.listeners.LaunchpadListener;
+import com.itsaloof.kitpvp.launchpad.listeners.LaunchListener;
 import com.itsaloof.kitpvp.listeners.SignEvent;
 import com.itsaloof.kitpvp.utils.CPlayer;
 
@@ -26,7 +26,7 @@ public class KitPvPPlugin extends JavaPlugin {
 	public List<Player> noFall = new ArrayList<Player>();
 	public static Economy econ = null;
 	public FileConfiguration config;
-	public final LaunchpadUtils launchpadUtils = new LaunchpadUtils(this);
+	public final LaunchUtils launchUtils = new LaunchUtils(this);
 
 	@Override
 	public void onEnable()
@@ -35,7 +35,7 @@ public class KitPvPPlugin extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new JoinLeaveEvent(this), this);
 		Bukkit.getPluginManager().registerEvents(new KillEvent(this), this);
 		Bukkit.getPluginManager().registerEvents(new SignEvent(this), this);
-		Bukkit.getPluginManager().registerEvents(new LaunchpadListener(this), this);
+		Bukkit.getPluginManager().registerEvents(new LaunchListener(this), this);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
-package com.itsaloof.kitpvp.api.events;
+package com.itsaloof.kitpvp.launchpad.events;
 
-import com.itsaloof.kitpvp.api.enums.LaunchPhase;
+import com.itsaloof.kitpvp.launchpad.enums.LaunchPhase;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;

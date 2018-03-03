@@ -1,7 +1,7 @@
-package com.itsaloof.kitpvp.utils;
+package com.itsaloof.kitpvp.launchpad.utils;
 
-import com.itsaloof.kitpvp.api.enums.LaunchPhase;
-import com.itsaloof.kitpvp.api.events.LaunchEvent;
+import com.itsaloof.kitpvp.launchpad.enums.LaunchPhase;
+import com.itsaloof.kitpvp.launchpad.events.LaunchEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class LaunchpadUtils {
+public class LaunchUtils {
     private static final List<Material> additionalGroundMaterials = Arrays.asList(
             Material.LADDER,
             Material.LAVA,
@@ -26,7 +26,7 @@ public class LaunchpadUtils {
     private final List<UUID> onLaunchpad = new ArrayList<>();
     private final List<UUID> beingLaunched = new ArrayList<>();
 
-    public LaunchpadUtils(final JavaPlugin plugin) {
+    public LaunchUtils(final JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
