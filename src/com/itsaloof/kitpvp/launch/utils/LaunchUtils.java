@@ -70,8 +70,7 @@ public class LaunchUtils {
         this.setBeingLaunched(player.getUniqueId(), beingLaunched);
     }
 
-    public boolean startLaunch(final Player player) {
-        final UUID uuid = player.getUniqueId();
+    public boolean startLaunch(final Player player, final UUID uuid) {
         if (this.isBeingLaunched(uuid)) {
             return false;
         }
@@ -90,8 +89,15 @@ public class LaunchUtils {
         return true;
     }
 
-    public boolean endLaunch(final Player player) {
-        final UUID uuid = player.getUniqueId();
+    public boolean startLaunch(final Player player) {
+        return this.startLaunch(player, player.getUniqueId());
+    }
+
+    public boolean startLaunch(final UUID uuid) {
+        return this.startLaunch(this.plugin.getServer().getPlayer(uuid), uuid);
+    }
+
+    public boolean endLaunch(final Player player, final UUID uuid) {
         if (!this.isBeingLaunched(uuid)) {
             return false;
         }
@@ -105,5 +111,13 @@ public class LaunchUtils {
 
         this.setBeingLaunched(uuid, false);
         return true;
+    }
+
+    public boolean endLaunch(final Player player) {
+        return this.endLaunch(player, player.getUniqueId());
+    }
+
+    public boolean endLaunch(final UUID uuid) {
+        return this.endLaunch(this.plugin.getServer().getPlayer(uuid), uuid);
     }
 }
