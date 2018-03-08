@@ -1,5 +1,6 @@
 package com.itsaloof.kitpvp.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -20,14 +21,22 @@ public class ArenaBuilderUtil {
 		this.plugin = plugin;
 		this.name = name;
 		this.max = max;
-		plugin.underConstruction.add(this);
+		spawns = new ArrayList<Location>();
 	}
 	
-	public void setSpawn(Location loc)
+	public void setSpawn(final Location loc)
 	{
-		if(spawns.size() < max)
+		if(spawns.isEmpty())
+		{
+			spawns.add(loc);
+			return;
+		}
+		else if(spawns.size() == max)
 		{
 			spawns.remove(0);
+			spawns.add(loc);
+		}else
+		{
 			spawns.add(loc);
 		}
 	}
@@ -42,7 +51,7 @@ public class ArenaBuilderUtil {
 		return this.max;
 	}
 	
-	public void createArena(Player player)
+	public void createArena(final Player player)
 	{
 		if(spawns.size() != max)
 		{
@@ -51,9 +60,7 @@ public class ArenaBuilderUtil {
 		}
 		
 		Arena arena = new Arena(plugin, spawns, name, max);
-		arena.saveArena();
 		plugin.arenas.add(arena);
-		
 	}
 
 }

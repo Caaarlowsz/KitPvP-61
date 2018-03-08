@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.itsaloof.kitpvp.KitPvPPlugin;
+import com.itsaloof.kitpvp.utils.Arena;
 import com.itsaloof.kitpvp.utils.ArenaBuilderUtil;
 
 import net.md_5.bungee.api.ChatColor;
@@ -13,35 +14,43 @@ import net.md_5.bungee.api.ChatColor;
 public class ArenaCommand implements CommandExecutor {
 	private final KitPvPPlugin plugin;
 	private final String noPerms;
+	private final String createUsage = ChatColor.RED + ">/arena create [arenaName] [maxPlayers]";
+	private final String setupUsage = ChatColor.RED + ">/arena [arenaName] setup";
+	private final String setSpawnUsage = ChatColor.RED + ">/arena [arenaName] setspawn";
+
 	public ArenaCommand(final KitPvPPlugin plugin) {
 		this.plugin = plugin;
 		this.noPerms = ChatColor.RED + "You do not have permission to use this command!";
 	}
 
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().toLowerCase() == "arena") 
-		{
-			if (sender instanceof Player) 
-			{
+		if (cmd.getName().equalsIgnoreCase("arena")) {
+			if (sender instanceof Player) {
 				Player player = (Player) sender;
-				if (player.hasPermission("kitpvp.arena")) 
-				{
-					if (args.length > 0) 
-					{
-						if(createArg(args, player))
-							return true;
-						if(setSpawnArg(args, player))
-							return true;
-						if(setupArg(args, player))
+				if (player.hasPermission("kitpvp.arena")) {
+					if (args.length != 0) {
+						
+						if (createArg(args, player))
 							return true;
 						
-					} 
-					else 
-					{
+						if (setSpawnArg(args, player))
+							return true;
+						
+						if (setupArg(args, player))
+							return true;
+						
+						if(listArg(args, player))
+							return true;
+					} else {
+						
+						player.sendMessage(createUsage);
+						player.sendMessage(setSpawnUsage);
+						player.sendMessage(setupUsage);
 						return false;
 					}
-				}else
-				{
+				} else {
+					
 					player.sendMessage(noPerms);
 					return false;
 				}
@@ -49,108 +58,121 @@ public class ArenaCommand implements CommandExecutor {
 		}
 		return false;
 	}
-	
-	private boolean setupArg(String args[], Player player)
-	{
-		if(args[1].equalsIgnoreCase("setup"))
+
+	private boolean setupArg(String args[], Player player) {
+		if(args.length > 1)
 		{
-			if(!player.hasPermission("kitpvp.arena.setup"))
-			{
-				player.sendMessage(noPerms);
-				return false;
-			}
-			ArenaBuilderUtil ab = arenaBuilderExists(args[1]);
-			if(ab != null)
-			{
-				ab.createArena(player);
-				return true;
-			}else
-			{
-				player.sendMessage(ChatColor.RED + "That arena doesn't exist!");
-				return false;
-			}
-		}
-		return false;
-	}
-	
-	private boolean setSpawnArg(String args[], Player player)
-	{
-		if(args[1].equalsIgnoreCase("setspawn") || args[1].equalsIgnoreCase("sp"))
-		{
-			if(!player.hasPermission("kitpvp.arena.setspawn"))
-			{
-				player.sendMessage(noPerms);
-				return false;
-			}
-			ArenaBuilderUtil ab = arenaBuilderExists(args[0]);
-			if(ab != null)
-			{
-				ab.setSpawn(player.getLocation());
-				return true;
-			}
-			else
-			{
-				player.sendMessage(ChatColor.RED + "That arena doesn't exist!");
-				return false;
-			}
-		}
-		return false;
-	}
-	
-	private boolean createArg(String args[], Player player)
-	{
-		if(args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("c"))
-		{
-			
-			if(!player.hasPermission("kitpvp.arena.create"))
-			{
-				player.sendMessage(noPerms);
-				return false;
-			}
-			
-			if(args.length >= 3) // /arena create [name] [maxPlayers]
-			{
-				if(isInteger(args[2]))
+			if (args[1].equalsIgnoreCase("setup")) {
+				if (!player.hasPermission("kitpvp.arena.setup")) 
 				{
-					new ArenaBuilderUtil(plugin, args[1], Integer.getInteger(args[2]));
-					return true;
-				}else
-				{
-					player.sendMessage(ChatColor.RED + ">/arena create [arenaName] [maxPlayers]");
+					player.sendMessage(noPerms);
 					return false;
 				}
-			}else
+				ArenaBuilderUtil ab = arenaBuilderExists(args[0]);
+				if (ab != null) {
+					ab.createArena(player);
+					player.sendMessage(ChatColor.GREEN + "Successfully created arena " + ab.getArenaName());
+					return true;
+				} else {
+					player.sendMessage(ChatColor.RED + "That arena doesn't exist!");
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean setSpawnArg(String args[], Player player) {
+		if (args.length > 1)
+		{
+			if (args[1].equalsIgnoreCase("setspawn") || args[1].equalsIgnoreCase("sp")) {
+				if (!player.hasPermission("kitpvp.arena.setspawn")) {
+					player.sendMessage(noPerms);
+					return false;
+				}
+				ArenaBuilderUtil ab = arenaBuilderExists(args[0]);
+				if (ab != null) {
+					ab.setSpawn(player.getLocation());
+					player.sendMessage(ChatColor.GREEN + "Set new spawn!");
+					return true;
+				} else {
+					player.sendMessage(ChatColor.RED + "That arena doesn't exist!");
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean createArg(String args[], Player player) {
+		if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("c")) {
+
+			if (!player.hasPermission("kitpvp.arena.create")) {
+				player.sendMessage(noPerms);
+				return false;
+			}
+
+			if (args.length >= 3) // /arena create [name] [maxPlayers]
 			{
-				player.sendMessage(ChatColor.RED + ">/arena create [arenaName] [maxPlayers]");
+				if (isInteger(args[2])) {
+					plugin.underConstruction.add(new ArenaBuilderUtil(plugin, args[1], Integer.parseInt(args[2])));
+					player.sendMessage(ChatColor.GREEN + "Successfully started creation of arena " + args[1]);
+					return true;
+				} else {
+					player.sendMessage(createUsage);
+					return false;
+				}
+			} else {
+				player.sendMessage(createUsage);
 				return false;
 			}
 		}
 		return false;
 	}
 	
-	public ArenaBuilderUtil arenaBuilderExists(String name)
+	private boolean listArg(String args[], Player player)
 	{
-		for(ArenaBuilderUtil arena : plugin.underConstruction)
+		if(args.length >= 1)
 		{
-			if(arena.getArenaName().equalsIgnoreCase(name))
+			if(args[0].equalsIgnoreCase("list") && player.hasPermission("kitpvp.arena.list"))
 			{
+				if(plugin.arenas.isEmpty())
+				{
+					player.sendMessage(ChatColor.RED + "There are no arenas created yet!");
+					return true;
+				}
+				
+				player.sendMessage(ChatColor.GREEN + "=====Arenas======");
+				for(Arena a : plugin.arenas)
+				{
+					player.sendMessage((plugin.arenas.indexOf(a) + 1) + ".) " + a.getArenaName());
+				}
+				return true;
+			}else
+			{
+				player.sendMessage(noPerms);
+				return false;
+			}
+		}
+		return false;
+	}
+
+	public ArenaBuilderUtil arenaBuilderExists(String name) {
+		for (final ArenaBuilderUtil arena : plugin.underConstruction) {
+			if (arena.getArenaName().equalsIgnoreCase(name)) {
 				return arena;
 			}
 		}
 		return null;
 	}
-	
-	private boolean isInteger(String num)
-	{
-		if(num.isEmpty())
+
+	private boolean isInteger(String num) {
+		if (num.isEmpty())
 			return false;
-		for(Character c : num.toCharArray())
-		{
-			if(Character.isDigit(c))
-			{
+		for (Character c : num.toCharArray()) {
+			if (Character.isDigit(c)) {
 				continue;
-			}else
-			{
+			} else {
 				return false;
 			}
 		}

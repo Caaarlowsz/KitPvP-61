@@ -2,9 +2,11 @@ package com.itsaloof.kitpvp.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -19,13 +21,18 @@ public class Arena {
 	private List<Location> spawns;
 	private List<Player> players;
 	private String name;
-	private final int maxPlayers;
+	private int maxPlayers;
 	public Arena(KitPvPPlugin plugin, List<Location> spawns, String name, int max)
 	{
 		this.plugin = plugin;
 		this.spawns = spawns;
 		this.name = name;
 		this.maxPlayers = max;
+	}
+	
+	public Arena(KitPvPPlugin plugin)
+	{
+		this.plugin = plugin;
 	}
 	
 	public List<Location> getSpawns()
@@ -103,6 +110,11 @@ public class Arena {
 		}
 	}
 	
+	public int getMaxPlayers()
+	{
+		return maxPlayers;
+	}
+	
 	public void teleportPlayers()
 	{
 		if(overFlow())
@@ -120,36 +132,31 @@ public class Arena {
 		}
 	}
 	
-	
 	public void saveArena()
 	{
-		File folder = new File(plugin.getDataFolder(), "Arenas");
-		if(!folder.exists())
-		{
-			folder.mkdirs();
-		}
-		File f = new File(folder, this.name + ".yml");
+		File f = plugin.getArenaFile();
 		if(!f.exists())
 		{
 			try {
 				f.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
-				return;
 			}
 		}
 		
 		FileConfiguration fc = YamlConfiguration.loadConfiguration(f);
-		fc.set("Arena.name", this.name);
-		fc.set("Arena.maxPlayers", maxPlayers);
+		final String path = "Arenas." + getArenaName();
+		fc.set(path + ".maxPlayers", maxPlayers);
 		int spawn = 0;
 		for(Location l : spawns)
 		{
-			String path = "Arena.spawns.spawn" + spawn;
-			fc.set(path + ".world", l.getWorld().getName());
-			fc.set(path + ".x", l.getBlockX());
-			fc.set(path + ".y", l.getBlockY());
-			fc.set(path + ".z", l.getBlockZ());
+			final String sPath = path + ".spawns.spawn" + spawn;
+			fc.set(sPath + ".world", l.getWorld().getName());
+			fc.set(sPath + ".x", l.getBlockX());
+			fc.set(sPath + ".y", l.getBlockY());
+			fc.set(sPath + ".z", l.getBlockZ());
+			fc.set(sPath + ".pitch", l.getPitch());
+			fc.set(sPath + ".yaw", l.getYaw());
 			spawn++;
 		}
 		
@@ -159,6 +166,34 @@ public class Arena {
 			e.printStackTrace();
 			return;
 		}
+	}
+	
+	public Arena loadArena(String name, FileConfiguration fc)
+	{
+		this.spawns = toLoc(fc, "Arenas." + name + ".spawns");
+		this.maxPlayers = fc.getInt("Arenas." + name + ".maxPlayers");
+		setArenaName(name);
+		return this;
+	}
+	
+	
+	private List<Location> toLoc(FileConfiguration fc, String path)
+	{
+		List<Location> locs = new ArrayList<Location>();
+		for(String s : fc.getConfigurationSection(path).getKeys(false))
+		{
+			double x, y, z;
+			float pitch, yaw;
+			World world;
+			x = fc.getInt(path + "." + s + ".x");
+			y = fc.getInt(path + "." + s + ".y");
+			z = fc.getInt(path + "." + s + ".z");
+			world = plugin.getServer().getWorld(fc.getString(path + "." + s + ".world"));
+			pitch = (float) fc.getDouble(path + "." + s + ".pitch");
+			yaw = (float) fc.getDouble(path + "." + s + ".yaw");
+			locs.add(new Location(world, x, y, z, yaw, pitch));
+		}
+		return locs;
 	}
 	
 	
