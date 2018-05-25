@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+
+import javax.security.auth.login.LoginException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,19 +17,25 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.itsaloof.kitpvp.commands.ArenaCommand;
+import com.itsaloof.kitpvp.commands.RegisterCommand;
 import com.itsaloof.kitpvp.listeners.JoinLeaveEvent;
 import com.itsaloof.kitpvp.listeners.KillEvent;
 import com.itsaloof.kitpvp.listeners.LaunchpadListener;
 import com.itsaloof.kitpvp.listeners.SignEvent;
+import com.itsaloof.kitpvp.listeners.discord.PingListener;
+import com.itsaloof.kitpvp.listeners.discord.RegisterListener;
 import com.itsaloof.kitpvp.utils.Arena;
 import com.itsaloof.kitpvp.utils.ArenaBuilderUtil;
 import com.itsaloof.kitpvp.utils.CPlayer;
 import com.itsaloof.kitpvp.utils.LaunchpadUtils;
 
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.User;
 import net.milkbowl.vault.economy.Economy;
 
 public class KitPvPPlugin extends JavaPlugin {
-
 	public HashMap<Player, CPlayer> players = new HashMap<Player, CPlayer>();
 	public List<Player> noFall = new ArrayList<Player>();
 	public static Economy econ = null;
@@ -37,6 +46,11 @@ public class KitPvPPlugin extends JavaPlugin {
 	public List<Arena> arenas = new ArrayList<Arena>();
 	private final String folderName = "PlayerData";
 	private final String arenaFileName = "Arenas.yml";
+	
+	public HashMap<UUID, User> registration;
+	
+	public JDA api;
+	//private ClientConnection client;
 
 	@Override
 	public void onEnable()
@@ -48,6 +62,7 @@ public class KitPvPPlugin extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new LaunchpadListener(this), this);
 		
 		getCommand("arena").setExecutor(new ArenaCommand(this));
+		getCommand("register").setExecutor(new RegisterCommand(this));
 		
 		FileConfiguration fc = YamlConfiguration.loadConfiguration(getArenaFile());
 		for(String s : fc.getConfigurationSection("Arenas").getKeys(false))
@@ -55,6 +70,17 @@ public class KitPvPPlugin extends JavaPlugin {
 			this.arenas.add(loadArena(s, fc));
 			System.out.println("Successfull loaded arena " + arenas.get((arenas.size() - 1)));
 		}
+		
+		try {
+			api = new JDABuilder(AccountType.BOT).setToken("NDQ2NTE2MTIzOTI0NDMwODU4.DekdjQ.Mb1ZdKY8wHG2X-nMrMSE_LF9mMA").buildAsync();
+		} catch (LoginException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		api.addEventListener(new PingListener(this));
+		api.addEventListener(new RegisterListener(this));
+		
 	}
 
 	@Override

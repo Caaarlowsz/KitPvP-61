@@ -17,6 +17,8 @@ public class CPlayer {
 	private File f;
 	private boolean compMode;
 	private int sp;
+	private boolean registered;
+	private String discordID;
 	
 	public CPlayer(Player player, KitPvPPlugin plugin)
 	{
@@ -27,6 +29,8 @@ public class CPlayer {
 		if(!checkPlayer(player))
 		{
 			f = new File(pl.getFolder(), player.getUniqueId() + ".yml");
+			registered = false;
+			discordID = "";
 		}
 	}
 	
@@ -60,6 +64,25 @@ public class CPlayer {
 		setKills(fc.getInt("Player.stats.kills"));
 		setDeaths(fc.getInt("Player.stats.deaths"));
 		setSkillPoints(fc.getInt("Player.stats.skillpoints"));
+		registered = fc.getBoolean("Player.discord.registered");
+		discordID = fc.getString("Player.discord.ID");
+	}
+	
+	public void register(String id)
+	{
+		this.registered = true;
+		this.discordID = id;
+		save();
+	}
+	
+	public boolean isRegistered()
+	{
+		return registered;
+	}
+	
+	public String getDiscordID()
+	{
+		return discordID;
 	}
 	
 	public int getKills()
@@ -129,6 +152,8 @@ public class CPlayer {
 		fc.set("Player.stats.deaths", deaths);
 		fc.set("Player.stats.skillpoints", sp);
 		fc.set("Player.name", p.getName());
+		fc.set("Player.discord.registered", registered);
+		fc.set("Player.discord.ID", discordID);
 		try {
 			fc.save(f);
 		} catch (IOException e) {
@@ -153,4 +178,5 @@ public class CPlayer {
 	{
 		return compMode;
 	}
+	
 }

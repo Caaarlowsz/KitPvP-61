@@ -1,9 +1,10 @@
 package com.itsaloof.kitpvp.listeners;
 
-import com.itsaloof.kitpvp.KitPvPPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
+
+import com.itsaloof.kitpvp.KitPvPPlugin;
 
 public class SignEvent implements Listener {
 

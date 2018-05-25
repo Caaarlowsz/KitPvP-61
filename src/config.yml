@@ -1,0 +1,25 @@
+# KitPvP Config
+
+kill-rewards:
+  message: '§6You have recieved §a%m §6for killing §4%p'
+  reward-amount: 5.0
+  potion-effects:
+   - blindness
+   - poison
+   - hunger
+   - weakness
+   - slow
+   - wither
+   - confusion
+launchpad:
+  material: STONE_PLATE
+multiplier: 6
+
+# <-- Discord --> #
+
+registration-channel: 'registration'
+# Enables a bot channel where bot commands can only be used
+bot-channel-enabled: false
+# Deletes all messages from bot and player command message
+bot-channel-delete: false
+bot-channel: 'bot-commands'

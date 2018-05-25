@@ -3,12 +3,12 @@ package com.itsaloof.kitpvp.api.events;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.Cancellable;
 
 import com.itsaloof.kitpvp.utils.Arena;
-import com.sun.xml.internal.ws.api.Cancelable;
 
 
-public class ArenaJoinEvent extends Event implements Cancelable{
+public class ArenaJoinEvent extends Event implements Cancellable {
 
 	private final Arena arena;
 	private boolean cancelled = false;
@@ -29,7 +29,6 @@ public class ArenaJoinEvent extends Event implements Cancelable{
 		return this.player;
 	}
 	
-	@Override
 	public void cancel(boolean cancelled) {
 		this.cancelled = cancelled;
 	}
