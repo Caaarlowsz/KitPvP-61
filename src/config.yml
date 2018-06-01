@@ -23,3 +23,4 @@ bot-channel-enabled: false
 # Deletes all messages from bot and player command message
 bot-channel-delete: false
 bot-channel: 'bot-commands'
+bot-token:

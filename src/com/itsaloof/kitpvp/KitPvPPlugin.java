@@ -18,20 +18,28 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.itsaloof.kitpvp.commands.ArenaCommand;
 import com.itsaloof.kitpvp.commands.RegisterCommand;
+import com.itsaloof.kitpvp.commands.discord.BalanceCommand;
+import com.itsaloof.kitpvp.commands.discord.BaltopCommand;
+import com.itsaloof.kitpvp.commands.discord.ChooseCommand;
+import com.itsaloof.kitpvp.commands.discord.HelloCommand;
+import com.itsaloof.kitpvp.commands.discord.ListCommand;
+import com.itsaloof.kitpvp.commands.discord.RegisterDiscordCommand;
 import com.itsaloof.kitpvp.listeners.JoinLeaveEvent;
 import com.itsaloof.kitpvp.listeners.KillEvent;
 import com.itsaloof.kitpvp.listeners.LaunchpadListener;
 import com.itsaloof.kitpvp.listeners.SignEvent;
-import com.itsaloof.kitpvp.listeners.discord.PingListener;
-import com.itsaloof.kitpvp.listeners.discord.RegisterListener;
 import com.itsaloof.kitpvp.utils.Arena;
 import com.itsaloof.kitpvp.utils.ArenaBuilderUtil;
 import com.itsaloof.kitpvp.utils.CPlayer;
 import com.itsaloof.kitpvp.utils.LaunchpadUtils;
+import com.jagrosh.jdautilities.command.CommandClientBuilder;
+import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
 import net.milkbowl.vault.economy.Economy;
 
@@ -47,10 +55,13 @@ public class KitPvPPlugin extends JavaPlugin {
 	private final String folderName = "PlayerData";
 	private final String arenaFileName = "Arenas.yml";
 	
-	public HashMap<UUID, User> registration;
+	public HashMap<UUID, HashMap<Guild, User>> registration = new HashMap<UUID, HashMap<Guild, User>>();
 	
 	public JDA api;
 	//private ClientConnection client;
+	
+	public static String IDpath = "Player.discord.ID";
+	public static String Registeredpath = "Player.discord.registered";
 
 	@Override
 	public void onEnable()
@@ -71,15 +82,26 @@ public class KitPvPPlugin extends JavaPlugin {
 			System.out.println("Successfull loaded arena " + arenas.get((arenas.size() - 1)));
 		}
 		
+		CommandClientBuilder builder = new CommandClientBuilder();
+		builder.addCommands(new HelloCommand(new EventWaiter()), new ChooseCommand(),
+				new ListCommand(this),
+				new BaltopCommand(this),
+				new RegisterDiscordCommand(this),
+				new BalanceCommand(this));
+		builder.setPrefix("?");
+		builder.setGame(Game.playing("Use ?help to see all commands and info"));
+		builder.setOwnerId("192730242673016832");
+		builder.build();
 		try {
-			api = new JDABuilder(AccountType.BOT).setToken("NDQ2NTE2MTIzOTI0NDMwODU4.DekdjQ.Mb1ZdKY8wHG2X-nMrMSE_LF9mMA").buildAsync();
+			api = new JDABuilder(AccountType.BOT)
+					.setToken(config.getString("bot-token"))
+					.setGame(Game.playing("Loading..."))
+					.buildAsync();
 		} catch (LoginException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		api.addEventListener(builder.build());
 		
-		api.addEventListener(new PingListener(this));
-		api.addEventListener(new RegisterListener(this));
 		
 	}
 
@@ -123,6 +145,11 @@ public class KitPvPPlugin extends JavaPlugin {
 		}
 		setupEconomy();
 
+	}
+	
+	public static String getUniqueTag(User user)
+	{
+		return user.getName() + "#" + user.getDiscriminator();
 	}
 
 	private boolean setupEconomy() 
