@@ -22,12 +22,14 @@ import com.itsaloof.kitpvp.commands.discord.BalanceCommand;
 import com.itsaloof.kitpvp.commands.discord.BaltopCommand;
 import com.itsaloof.kitpvp.commands.discord.ChooseCommand;
 import com.itsaloof.kitpvp.commands.discord.HelloCommand;
+import com.itsaloof.kitpvp.commands.discord.KitPvPStatsCommand;
 import com.itsaloof.kitpvp.commands.discord.ListCommand;
 import com.itsaloof.kitpvp.commands.discord.RegisterDiscordCommand;
 import com.itsaloof.kitpvp.listeners.JoinLeaveEvent;
 import com.itsaloof.kitpvp.listeners.KillEvent;
 import com.itsaloof.kitpvp.listeners.LaunchpadListener;
 import com.itsaloof.kitpvp.listeners.SignEvent;
+import com.itsaloof.kitpvp.listeners.discord.ChannelCreationListener;
 import com.itsaloof.kitpvp.utils.Arena;
 import com.itsaloof.kitpvp.utils.ArenaBuilderUtil;
 import com.itsaloof.kitpvp.utils.CPlayer;
@@ -87,7 +89,8 @@ public class KitPvPPlugin extends JavaPlugin {
 				new ListCommand(this),
 				new BaltopCommand(this),
 				new RegisterDiscordCommand(this),
-				new BalanceCommand(this));
+				new BalanceCommand(this),
+				new KitPvPStatsCommand(this));
 		builder.setPrefix("?");
 		builder.setGame(Game.playing("Use ?help to see all commands and info"));
 		builder.setOwnerId("192730242673016832");
@@ -101,7 +104,7 @@ public class KitPvPPlugin extends JavaPlugin {
 			e.printStackTrace();
 		}
 		api.addEventListener(builder.build());
-		
+		api.addEventListener(new ChannelCreationListener(this));
 		
 	}
 
@@ -206,5 +209,19 @@ public class KitPvPPlugin extends JavaPlugin {
 	{
 		Arena arena = new Arena(this);
 		return arena.loadArena(name, fc);
+	}
+	
+
+	public File getUser(String tag)
+	{
+		for(File f : getFolder().listFiles())
+		{
+			FileConfiguration fc = YamlConfiguration.loadConfiguration(f);
+			if(fc.getString(KitPvPPlugin.IDpath).trim().equals(tag.trim()))
+			{
+				return f;
+			}
+		}
+		return null;
 	}
 }

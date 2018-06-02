@@ -19,6 +19,7 @@ public class CPlayer {
 	private int sp;
 	private boolean registered;
 	private String discordID;
+	private FileConfiguration fc;
 	
 	public CPlayer(Player player, KitPvPPlugin plugin)
 	{
@@ -32,6 +33,12 @@ public class CPlayer {
 			registered = false;
 			discordID = "";
 		}
+	}
+	
+	public CPlayer(File f, KitPvPPlugin plugin)
+	{
+		loadData(f);
+		pl = plugin;
 	}
 	
 	private boolean checkPlayer(Player player)
@@ -66,6 +73,12 @@ public class CPlayer {
 		setSkillPoints(fc.getInt("Player.stats.skillpoints"));
 		registered = fc.getBoolean("Player.discord.registered");
 		discordID = fc.getString("Player.discord.ID");
+		this.fc = fc;
+	}
+	
+	public FileConfiguration getPlayerConfig()
+	{
+		return fc;
 	}
 	
 	public void register(String id)
@@ -73,6 +86,11 @@ public class CPlayer {
 		this.registered = true;
 		this.discordID = id;
 		save();
+	}
+	
+	public int getSkillPoints()
+	{
+		return sp;
 	}
 	
 	public boolean isRegistered()

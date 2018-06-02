@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.UUID;
 
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.itsaloof.kitpvp.KitPvPPlugin;
 import com.jagrosh.jdautilities.command.Command;
@@ -25,7 +23,7 @@ public class BalanceCommand extends Command {
 	@Override
 	protected void execute(CommandEvent event)
 	{
-		File f = getUser(KitPvPPlugin.getUniqueTag(event.getAuthor()));
+		File f = plugin.getUser(KitPvPPlugin.getUniqueTag(event.getAuthor()));
 		if(f != null)
 		{
 			OfflinePlayer p = plugin.getServer().getOfflinePlayer(UUID.fromString(f.getName().replace(".yml", "")));
@@ -35,19 +33,7 @@ public class BalanceCommand extends Command {
 		}
 	}
 	
-	private File getUser(String tag)
-	{
-		for(File f : plugin.getFolder().listFiles())
-		{
-			FileConfiguration fc = YamlConfiguration.loadConfiguration(f);
-			if(fc.getString(KitPvPPlugin.IDpath).trim().equals(tag.trim()))
-			{
-				return f;
-			}
-			System.out.println(fc.getString(KitPvPPlugin.IDpath) + " != " + tag);
-		}
-		return null;
-	}
+	
 	
 
 }
