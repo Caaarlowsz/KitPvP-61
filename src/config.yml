@@ -24,3 +24,5 @@ bot-channel-enabled: false
 bot-channel-delete: false
 bot-channel: 'bot-commands'
 bot-token:
+command-prefix: '>'
+
