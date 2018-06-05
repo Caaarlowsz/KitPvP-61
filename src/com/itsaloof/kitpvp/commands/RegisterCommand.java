@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.itsaloof.kitpvp.KitPvPPlugin;
+import com.itsaloof.kitpvp.api.events.RegisterEvent;
 import com.itsaloof.kitpvp.utils.CPlayer;
 
 import net.dv8tion.jda.core.entities.Guild;
@@ -31,7 +32,7 @@ public class RegisterCommand implements CommandExecutor{
 			if(cmd.getName().equalsIgnoreCase("register") && args.length >= 1)
 			{
 				UUID key = UUID.fromString(args[0]);
-				if(plugin.registration.containsKey(key))
+				if(args[0].matches("[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}") && plugin.registration.containsKey(key))
 				{
 					CPlayer p = plugin.players.get((Player) sender);
 					if(p.isRegistered())
@@ -48,7 +49,8 @@ public class RegisterCommand implements CommandExecutor{
 						p.register(KitPvPPlugin.getUniqueTag(user));
 						guild.getController().addSingleRoleToMember(guild.getMember(user), r).queue();
 						
-						sender.sendMessage(ChatColor.GREEN + "You are now registered as " + p.getDiscordID());
+						this.plugin.getServer().getPluginManager().callEvent(new RegisterEvent((Player) sender, user));
+						
 						plugin.registration.remove(key);
 						return true;
 					}

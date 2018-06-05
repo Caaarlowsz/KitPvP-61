@@ -28,6 +28,7 @@ import com.itsaloof.kitpvp.commands.discord.RegisterDiscordCommand;
 import com.itsaloof.kitpvp.listeners.JoinLeaveEvent;
 import com.itsaloof.kitpvp.listeners.KillEvent;
 import com.itsaloof.kitpvp.listeners.LaunchpadListener;
+import com.itsaloof.kitpvp.listeners.RegisterListener;
 import com.itsaloof.kitpvp.listeners.SignEvent;
 import com.itsaloof.kitpvp.listeners.discord.ChannelCreationListener;
 import com.itsaloof.kitpvp.utils.Arena;
@@ -73,6 +74,7 @@ public class KitPvPPlugin extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new KillEvent(this), this);
 		Bukkit.getPluginManager().registerEvents(new SignEvent(this), this);
 		Bukkit.getPluginManager().registerEvents(new LaunchpadListener(this), this);
+		Bukkit.getPluginManager().registerEvents(new RegisterListener(), this);
 		
 		getCommand("arena").setExecutor(new ArenaCommand(this));
 		getCommand("register").setExecutor(new RegisterCommand(this));
