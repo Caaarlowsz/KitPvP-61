@@ -30,7 +30,7 @@ public class KitPvPStatsCommand extends Command {
 		String s = fc.getString("Player.name") + "'s Stats" +
 		"\nKills: " + player.getKills() +
 		"\nDeaths: " + player.getDeaths() +
-		"\nK/D: " + (player.getKills() / player.getDeaths()) +
+		"\nK/D: " + ((player.getDeaths() == 0 ? (player.getKills()) : (player.getKills()/player.getDeaths()))) +
 		"\nSkillPoints: " + player.getSkillPoints();
 		
 		event.getChannel().sendMessage(s).queue();
