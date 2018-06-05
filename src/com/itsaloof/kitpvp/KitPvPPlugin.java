@@ -94,7 +94,7 @@ public class KitPvPPlugin extends JavaPlugin {
 				new BalanceCommand(this),
 				new KitPvPStatsCommand(this));
 		builder.setPrefix(getConfig().getString("command-prefix"));
-		builder.setGame(Game.playing(String.format("Use %phelp to see all commands and info", getConfig().getString("command-prefix"))));
+		builder.setGame(Game.playing(String.format("Use %shelp to see all commands and info", getConfig().getString("command-prefix"))));
 		builder.setOwnerId("192730242673016832");
 		builder.build();
 		try {
