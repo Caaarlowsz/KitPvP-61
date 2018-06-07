@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class ChannelCreationListener extends ListenerAdapter {
 
-	KitPvPPlugin plugin;
+	private final KitPvPPlugin plugin;
 	
 	public ChannelCreationListener(KitPvPPlugin plugin)
 	{

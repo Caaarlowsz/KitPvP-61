@@ -10,7 +10,7 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
 public class BalanceCommand extends Command {
-	KitPvPPlugin plugin;
+	private final KitPvPPlugin plugin;
 	public BalanceCommand(KitPvPPlugin plugin)
 	{
 		this.name = "balance";

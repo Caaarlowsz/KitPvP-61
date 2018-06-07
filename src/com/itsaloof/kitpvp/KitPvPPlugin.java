@@ -21,7 +21,6 @@ import com.itsaloof.kitpvp.commands.RegisterCommand;
 import com.itsaloof.kitpvp.commands.discord.BalanceCommand;
 import com.itsaloof.kitpvp.commands.discord.BaltopCommand;
 import com.itsaloof.kitpvp.commands.discord.ChooseCommand;
-import com.itsaloof.kitpvp.commands.discord.HelloCommand;
 import com.itsaloof.kitpvp.commands.discord.KitPvPStatsCommand;
 import com.itsaloof.kitpvp.commands.discord.ListCommand;
 import com.itsaloof.kitpvp.commands.discord.RegisterDiscordCommand;
@@ -36,7 +35,6 @@ import com.itsaloof.kitpvp.utils.ArenaBuilderUtil;
 import com.itsaloof.kitpvp.utils.CPlayer;
 import com.itsaloof.kitpvp.utils.LaunchpadUtils;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
-import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -87,7 +85,8 @@ public class KitPvPPlugin extends JavaPlugin {
 		}
 		
 		CommandClientBuilder builder = new CommandClientBuilder();
-		builder.addCommands(new HelloCommand(new EventWaiter()), new ChooseCommand(),
+		builder.addCommands(
+				new ChooseCommand(),
 				new ListCommand(this),
 				new BaltopCommand(this),
 				new RegisterDiscordCommand(this),

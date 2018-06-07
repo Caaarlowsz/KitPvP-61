@@ -18,7 +18,7 @@ import net.dv8tion.jda.core.entities.User;
 import net.md_5.bungee.api.ChatColor;
 
 public class RegisterCommand implements CommandExecutor{
-	private KitPvPPlugin plugin;
+	private final KitPvPPlugin plugin;
 	
 	public RegisterCommand(KitPvPPlugin plugin)
 	{

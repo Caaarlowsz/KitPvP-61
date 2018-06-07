@@ -9,11 +9,6 @@ import net.md_5.bungee.api.ChatColor;
 
 public class RegisterListener implements Listener{
 	
-	public RegisterListener()
-	{
-		
-	}
-	
 	
 	@EventHandler
 	public void onRegister(RegisterEvent event)

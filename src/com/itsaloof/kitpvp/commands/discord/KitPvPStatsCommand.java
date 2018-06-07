@@ -11,7 +11,7 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 
 public class KitPvPStatsCommand extends Command {
 	
-	KitPvPPlugin plugin;
+	private final KitPvPPlugin plugin;
 	
 	public KitPvPStatsCommand(KitPvPPlugin plugin) 
 	{

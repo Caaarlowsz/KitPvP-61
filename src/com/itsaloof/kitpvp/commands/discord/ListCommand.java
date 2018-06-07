@@ -7,7 +7,7 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
 public class ListCommand extends Command{
-	KitPvPPlugin plugin;
+	private final KitPvPPlugin plugin;
 	public ListCommand(KitPvPPlugin plugin)
 	{
 		this.plugin = plugin;

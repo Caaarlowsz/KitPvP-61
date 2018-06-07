@@ -11,7 +11,7 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
 public class BaltopCommand extends Command{
-	KitPvPPlugin plugin;
+	private final KitPvPPlugin plugin;
 	public BaltopCommand(KitPvPPlugin plugin)
 	{
 		this.name = "baltop";

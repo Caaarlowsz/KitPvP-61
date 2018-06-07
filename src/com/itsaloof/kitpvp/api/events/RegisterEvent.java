@@ -10,8 +10,8 @@ import net.dv8tion.jda.core.entities.User;
 public class RegisterEvent extends Event implements Cancellable {
 	private boolean cancelled = false;
 	private static final HandlerList handlers = new HandlerList();
-	private Player player;
-	private User user;
+	private final Player player;
+	private final User user;
 
 	public RegisterEvent(Player player, User user)
 	{

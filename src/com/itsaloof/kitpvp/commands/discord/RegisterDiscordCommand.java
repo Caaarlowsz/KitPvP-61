@@ -16,7 +16,7 @@ import net.dv8tion.jda.core.entities.PrivateChannel;
 import net.dv8tion.jda.core.entities.User;
 
 public class RegisterDiscordCommand extends Command{
-	KitPvPPlugin plugin;
+	private final KitPvPPlugin plugin;
 	public RegisterDiscordCommand(KitPvPPlugin plugin)
 	{
 		this.name = "register";

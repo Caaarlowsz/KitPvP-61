@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class JoinLeaveEvent implements Listener {
-    KitPvPPlugin pl;
+    private final KitPvPPlugin pl;
 
     public JoinLeaveEvent(KitPvPPlugin plugin) {
         pl = plugin;

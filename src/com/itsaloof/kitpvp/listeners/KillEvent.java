@@ -14,7 +14,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 
 public class KillEvent implements Listener {
 
-    KitPvPPlugin pl;
+    private final KitPvPPlugin pl;
 
     public KillEvent(KitPvPPlugin plugin) {
         pl = plugin;
