@@ -26,9 +26,8 @@ public class ArenaCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("arena")) {
-			if (sender instanceof Player) {
-				Player player = (Player) sender;
-				if (player.hasPermission("kitpvp.arena")) {
+			Player player = (Player) sender;
+			if (sender instanceof Player && sender.hasPermission("kitpvp.arena")) {
 					if (args.length != 0) {
 						
 						if (createArg(args, player))
@@ -49,11 +48,9 @@ public class ArenaCommand implements CommandExecutor {
 						player.sendMessage(setupUsage);
 						return false;
 					}
-				} else {
-					
-					player.sendMessage(noPerms);
-					return false;
-				}
+			}else {
+				player.sendMessage(noPerms);
+				return false;
 			}
 		}
 		return false;
@@ -62,12 +59,8 @@ public class ArenaCommand implements CommandExecutor {
 	private boolean setupArg(String args[], Player player) {
 		if(args.length > 1)
 		{
-			if (args[1].equalsIgnoreCase("setup")) {
-				if (!player.hasPermission("kitpvp.arena.setup")) 
-				{
-					player.sendMessage(noPerms);
-					return false;
-				}
+			if (args[1].equalsIgnoreCase("setup") && player.hasPermission("kitpvp.arena.setup")) {
+					
 				ArenaBuilderUtil ab = arenaBuilderExists(args[0]);
 				if (ab != null) {
 					ab.createArena(player);
@@ -77,6 +70,10 @@ public class ArenaCommand implements CommandExecutor {
 					player.sendMessage(ChatColor.RED + "That arena doesn't exist!");
 					return false;
 				}
+			}else
+			{
+				player.sendMessage(noPerms);
+				return false;
 			}
 		}
 		return false;
@@ -85,11 +82,9 @@ public class ArenaCommand implements CommandExecutor {
 	private boolean setSpawnArg(String args[], Player player) {
 		if (args.length > 1)
 		{
-			if (args[1].equalsIgnoreCase("setspawn") || args[1].equalsIgnoreCase("sp")) {
-				if (!player.hasPermission("kitpvp.arena.setspawn")) {
-					player.sendMessage(noPerms);
-					return false;
-				}
+			if (args[1].equalsIgnoreCase("setspawn") || args[1].equalsIgnoreCase("sp") 
+					&& player.hasPermission("kitpvp.arena.setspawn")) {
+					
 				ArenaBuilderUtil ab = arenaBuilderExists(args[0]);
 				if (ab != null) {
 					ab.setSpawn(player.getLocation());
@@ -99,19 +94,17 @@ public class ArenaCommand implements CommandExecutor {
 					player.sendMessage(ChatColor.RED + "That arena doesn't exist!");
 					return false;
 				}
+			}else
+			{
+				player.sendMessage(noPerms);
+				return false;
 			}
 		}
 		return false;
 	}
 
 	private boolean createArg(String args[], Player player) {
-		if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("c")) {
-
-			if (!player.hasPermission("kitpvp.arena.create")) {
-				player.sendMessage(noPerms);
-				return false;
-			}
-
+		if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("c") && player.hasPermission("kitpvp.arena.create")) {
 			if (args.length >= 3) // /arena create [name] [maxPlayers]
 			{
 				if (isInteger(args[2])) {
@@ -126,8 +119,11 @@ public class ArenaCommand implements CommandExecutor {
 				player.sendMessage(createUsage);
 				return false;
 			}
+		}else
+		{
+			player.sendMessage(noPerms);
+			return false;
 		}
-		return false;
 	}
 	
 	private boolean listArg(String args[], Player player)

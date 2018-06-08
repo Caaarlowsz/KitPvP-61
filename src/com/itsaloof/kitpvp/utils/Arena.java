@@ -42,29 +42,18 @@ public class Arena {
 	
 	public boolean isArenaFull()
 	{
-		if(players.size() >= maxPlayers)
-			return true;
-		else
-			return false;
+		return (players.size() >= maxPlayers);
 	}
 	
 	private boolean overFlow()
 	{
-		if(players.size() > maxPlayers)
-			return true;
-		else
-			return false;
+		return (players.size() > maxPlayers);
 	}
 	
 	
 	public boolean playerInArena(Player player)
 	{
-		if(this.players.isEmpty())
-			return false;
-		if(this.players.contains(player))
-			return true;
-		else
-			return false;
+		return (this.players.contains(player));
 	}
 	
 	public String getArenaName()
@@ -182,12 +171,19 @@ public class Arena {
 		List<Location> locs = new ArrayList<Location>();
 		for(String s : fc.getConfigurationSection(path).getKeys(false))
 		{
-			double x, y, z;
-			float pitch, yaw;
+			double x, 
+			y, 
+			z;
+			
+			float pitch, 
+			yaw;
+			
 			World world;
+			
 			x = fc.getInt(path + "." + s + ".x");
 			y = fc.getInt(path + "." + s + ".y");
 			z = fc.getInt(path + "." + s + ".z");
+			
 			world = plugin.getServer().getWorld(fc.getString(path + "." + s + ".world"));
 			pitch = (float) fc.getDouble(path + "." + s + ".pitch");
 			yaw = (float) fc.getDouble(path + "." + s + ".yaw");

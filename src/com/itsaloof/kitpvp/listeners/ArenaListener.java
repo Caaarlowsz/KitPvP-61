@@ -5,7 +5,6 @@ import org.bukkit.event.Listener;
 
 import com.itsaloof.kitpvp.KitPvPPlugin;
 import com.itsaloof.kitpvp.api.events.ArenaJoinEvent;
-import com.itsaloof.kitpvp.api.events.PlayerWinEvent;
 import com.itsaloof.kitpvp.utils.Arena;
 
 public class ArenaListener implements Listener {
@@ -28,10 +27,13 @@ public class ArenaListener implements Listener {
 		
 	}
 	
+	// Temporarily removed until needed in future
+	/*
 	@EventHandler
 	public void onPlayerWin(PlayerWinEvent event)
 	{
 		
 	}
+	*/
 
 }

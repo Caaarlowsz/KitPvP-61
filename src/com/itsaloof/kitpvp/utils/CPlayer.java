@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 import com.itsaloof.kitpvp.KitPvPPlugin;
 
 public class CPlayer {
-	Player p;
-	KitPvPPlugin pl;
+	private Player p;
+	private final KitPvPPlugin pl;
 	private int kills;
 	private int deaths;
 	private File f;
@@ -138,9 +138,9 @@ public class CPlayer {
 		kills += amount;
 	}
 	
-	public void removeSkillPoints()
+	public void removeSkillPoints(int amount)
 	{
-		
+		sp -= amount;
 	}
 	
 	public void addSkillPoints(CPlayer cp)
