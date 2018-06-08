@@ -34,7 +34,7 @@ public class ChannelCreationListener extends ListenerAdapter {
 	private boolean isBotChannel(String channel)
 	{
 		String botChannel = plugin.getConfig().getString("bot-channel");
-		if(botChannel == null || botChannel == "")
+		if(botChannel.equals(null) || botChannel.equals(""))
 			return false;
 		return (botChannel.equals(channel));
 	}

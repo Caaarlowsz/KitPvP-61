@@ -29,7 +29,6 @@ public class ListCommand extends Command{
 			s += "\n" + p.getName();
 		}
 		event.getChannel().sendMessage(s).queue();
-		return;
 	}
 
 }

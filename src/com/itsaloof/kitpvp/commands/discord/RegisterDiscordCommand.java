@@ -47,7 +47,6 @@ public class RegisterDiscordCommand extends Command{
 			HashMap<Guild, User> user = new HashMap<Guild, User>();
 			user.put(event.getGuild(), event.getAuthor());
 			plugin.registration.put(id, user);
-			return;
 		}
 	}
 	

@@ -41,7 +41,6 @@ public class BaltopCommand extends Command{
 			i++;
 		}
 		event.getChannel().sendMessage(s).queue();
-		return;
 	}
 
 }
