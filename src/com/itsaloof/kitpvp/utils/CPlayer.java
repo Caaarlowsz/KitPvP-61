@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import com.itsaloof.kitpvp.KitPvPPlugin;
 
@@ -20,6 +21,8 @@ public class CPlayer {
 	private boolean registered;
 	private String discordID;
 	private FileConfiguration fc;
+	private Inventory inv;
+	private Arena currentArena;
 	
 	public CPlayer(Player player, KitPvPPlugin plugin)
 	{
@@ -39,6 +42,7 @@ public class CPlayer {
 	{
 		loadData(f);
 		pl = plugin;
+		this.p = null;
 	}
 	
 	private boolean checkPlayer(Player player)
@@ -87,6 +91,16 @@ public class CPlayer {
 		this.discordID = id;
 		save();
 	}
+	
+	public void setInventory(Inventory inv)
+	  {
+	    this.inv = inv;
+	  }
+	  
+	public Inventory getInventory()
+	  {
+	    return this.inv;
+	  }
 	
 	public int getSkillPoints()
 	{
@@ -148,6 +162,11 @@ public class CPlayer {
 		
 	}
 	
+	public Player getPlayer()
+	  {
+	    return this.p;
+	  }
+	
 	public void save()
 	{
 		if(!pl.getDataFolder().exists())
@@ -182,19 +201,34 @@ public class CPlayer {
 	
   
 	public void toggleCompMode()
-	{
-		if(compMode)
-		{
-			compMode = false;
-		}else
-		{
-			compMode = true;
-		}
-	}
-	
-	public boolean compMode()
-	{
-		return compMode;
-	}
+	  {
+	    if (this.compMode) {
+	      this.compMode = false;
+	    } else {
+	      this.compMode = true;
+	    }
+	  }
+	  
+	  public boolean compMode()
+	  {
+	    return this.compMode;
+	  }
+	  
+	  public Arena getCurrentArena()
+	  {
+	    return this.currentArena;
+	  }
+	  
+	  public void setCurrentArena(Arena a)
+	  {
+	    this.currentArena = a;
+	  }
+	  
+	  public int compareTo(CPlayer player2)
+	  {
+	    int kills = player2.getKills();
+	    
+	    return this.kills - kills;
+	  }
 	
 }

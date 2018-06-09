@@ -10,6 +10,7 @@ import com.itsaloof.kitpvp.utils.Arena;
 
 public class ArenaJoinEvent extends Event implements Cancellable {
 
+    private static final HandlerList handlers = new HandlerList();
 	private final Arena arena;
 	private boolean cancelled = false;
 	private final Player player;
@@ -43,10 +44,13 @@ public class ArenaJoinEvent extends Event implements Cancellable {
 		this.cancelled = cancelled;
 	}
 	
-	@Override
+	public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    @Override
 	public HandlerList getHandlers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return handlers;
+    }
 
 }

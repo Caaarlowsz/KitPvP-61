@@ -10,14 +10,17 @@ import com.itsaloof.kitpvp.utils.Arena;
 
 public class PlayerWinEvent extends Event implements Cancellable
 {
+    private static final HandlerList handlers = new HandlerList();
 	private final Arena arena;
 	private final Player winner;
+	private final Player loser;
 	private boolean cancelled = false;
 	
-	public PlayerWinEvent(Arena arena, Player winner)
+	public PlayerWinEvent(Arena arena, Player winner, Player loser)
 	{
 		this.arena = arena;
 		this.winner = winner;
+		this.loser = loser;
 	}
 	
 	public Player getWinner()
@@ -32,12 +35,7 @@ public class PlayerWinEvent extends Event implements Cancellable
 	
 	public Player getLoser()
 	{
-		for(Player p : arena.getPlayers())
-		{
-			if(p != winner)
-				return p;
-		}
-		return null;
+		return loser;
 	}
 	
 	@Override
@@ -53,11 +51,14 @@ public class PlayerWinEvent extends Event implements Cancellable
 	}
 
 
-	@Override
+	public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    @Override
 	public HandlerList getHandlers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return handlers;
+    }
 	
 
 }

@@ -19,15 +19,18 @@ import net.md_5.bungee.api.ChatColor;
 public class Arena {
 	private final KitPvPPlugin plugin;
 	private List<Location> spawns;
-	private List<Player> players;
+	private List<Player> players = new ArrayList<Player>();
 	private String name;
 	private int maxPlayers;
+	private boolean inUse;
+	  
 	public Arena(KitPvPPlugin plugin, List<Location> spawns, String name, int max)
 	{
 		this.plugin = plugin;
 		this.spawns = spawns;
 		this.name = name;
 		this.maxPlayers = max;
+		this.inUse = false;
 	}
 	
 	public Arena(KitPvPPlugin plugin)
@@ -42,6 +45,8 @@ public class Arena {
 	
 	public boolean isArenaFull()
 	{
+		if(players.isEmpty())
+			return false;
 		return (players.size() >= maxPlayers);
 	}
 	
@@ -71,6 +76,19 @@ public class Arena {
 		return this.players;
 	}
 	
+	 public boolean inUse()
+	  {
+	    return this.inUse;
+	  }
+	 
+	 public void toggleInUse()
+	 {
+		 if(inUse)
+			 inUse = false;
+		 else
+			 inUse = true;
+	 }
+	
 	public boolean addPlayer(Player player)
 	{
 		ArenaJoinEvent event = new ArenaJoinEvent(this, player);
@@ -80,6 +98,11 @@ public class Arena {
 			return false;
 			
 		this.players.add(player);
+		if(isArenaFull())
+		{
+			toggleInUse();
+			teleportPlayers();
+		}
 		return true;
 	}
 	
