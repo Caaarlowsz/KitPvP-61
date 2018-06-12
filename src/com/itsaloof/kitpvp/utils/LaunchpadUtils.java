@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import com.itsaloof.kitpvp.api.enums.LaunchPhase;
 import com.itsaloof.kitpvp.api.events.LaunchEvent;
@@ -38,11 +37,11 @@ public class LaunchpadUtils {
     }
 
     public Material getMaterial() {
-        return Material.getMaterial(this.plugin.getConfig().getString("launchpad.material").toUpperCase());
+        return Material.getMaterial(this.plugin.getConfig().getString("launchpad.type").toUpperCase());
     }
 
     public double getMultiplier() {
-        return this.plugin.getConfig().getDouble("launchpad.multiplier");
+        return this.plugin.getConfig().getDouble("launchpad.strength");
     }
 
     public boolean isOnLaunchpad(final UUID uuid) {
@@ -93,9 +92,6 @@ public class LaunchpadUtils {
         if (event.isCancelled()) {
             return false;
         }
-
-        player.setVelocity(player.getLocation().getDirection().multiply(this.getMultiplier()));
-        player.setVelocity(new Vector(player.getVelocity().getX(), 1.0D, player.getVelocity().getZ()));
         this.setBeingLaunched(uuid, true);
         
         new BukkitRunnable() {

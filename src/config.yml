@@ -12,8 +12,10 @@ kill-rewards:
    - wither
    - confusion
 launchpad:
-  material: STONE_PLATE
-multiplier: 6
+  type: 17
+  plate: STONE_PLATE
+  strength: 6
+  height: 2.0
 
 # <-- Discord --> #
 
