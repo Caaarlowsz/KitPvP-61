@@ -15,8 +15,10 @@ public class MatchMaker extends BukkitRunnable {
 		public void run() {
 			if (plugin.queue.size() >= 2) {
 				for (Arena a : plugin.arenas) {
-					if (!a.inUse()) {
-						for (CPlayer p : plugin.queue) {
+					if (!a.inUse() && !a.isArenaFull() && !plugin.queue.isEmpty()) {
+						for(int i = 0; i < plugin.queue.size(); i++)
+						{
+							CPlayer p = plugin.queue.get(i);
 							if (!a.isArenaFull()) {
 								a.addPlayer(p.getPlayer());
 							} else {

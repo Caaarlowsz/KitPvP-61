@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import com.itsaloof.kitpvp.KitPvPPlugin;
 
@@ -21,7 +21,7 @@ public class CPlayer {
 	private boolean registered;
 	private String discordID;
 	private FileConfiguration fc;
-	private Inventory inv;
+	private ItemStack[] inv;
 	private Arena currentArena;
 	
 	public CPlayer(Player player, KitPvPPlugin plugin)
@@ -92,12 +92,12 @@ public class CPlayer {
 		save();
 	}
 	
-	public void setInventory(Inventory inv)
+	public void setInventory(ItemStack[] inv)
 	  {
 	    this.inv = inv;
 	  }
 	  
-	public Inventory getInventory()
+	public ItemStack[] getInventory()
 	  {
 	    return this.inv;
 	  }

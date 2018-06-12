@@ -119,6 +119,13 @@ public class KitPvPPlugin extends JavaPlugin {
 		}
 
 		for (Arena a : arenas) {
+			if(a.isArenaFull())
+			{
+				for(Player p : a.getPlayers())
+				{
+					p.teleport(p.getLocation().getWorld().getSpawnLocation());
+				}
+			}
 			a.saveArena();
 		}
 	}

@@ -84,7 +84,10 @@ public class Arena {
 	 public void toggleInUse()
 	 {
 		 if(inUse)
+		 {
 			 inUse = false;
+			 return;
+		 }
 		 else
 			 inUse = true;
 	 }
@@ -97,13 +100,18 @@ public class Arena {
 		if(event.isCancelled())
 			return false;
 			
-		this.players.add(player);
+		players.add(player);
 		if(isArenaFull())
 		{
 			toggleInUse();
 			teleportPlayers();
 		}
 		return true;
+	}
+	
+	public void clearArena()
+	{
+		this.players.clear();
 	}
 	
 	public void setPlayers(List<Player> players)
@@ -141,7 +149,9 @@ public class Arena {
 		for(int i = 0; i < players.size(); i++)
 		{
 			players.get(i).teleport(spawns.get(i));
+			plugin.queue.remove(plugin.players.get(players.get(i)));
 		}
+		plugin.updateSigns();
 	}
 	
 	public void saveArena()
