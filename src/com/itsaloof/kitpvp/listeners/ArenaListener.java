@@ -2,6 +2,7 @@ package com.itsaloof.kitpvp.listeners;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,7 +52,7 @@ public class ArenaListener implements Listener {
 	private void teleportPlayers(List<Player> players) {
 		for (Player p : players) {
 			{
-				p.teleport(p.getLocation().getWorld().getSpawnLocation());
+				p.teleport(Bukkit.getWorld(plugin.getConfig().getString("main-world")).getSpawnLocation());
 				p.resetMaxHealth();
 				p.setFoodLevel(20);
 			}

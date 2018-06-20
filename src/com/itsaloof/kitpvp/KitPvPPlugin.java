@@ -80,15 +80,18 @@ public class KitPvPPlugin extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new RegisterListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ArenaListener(this), this);
 		
-		mm.runTaskTimerAsynchronously(this, 20L, 20L);
+		mm.runTaskTimer(this, 20L, 20L);
 
 		getCommand("arena").setExecutor(new ArenaCommand(this));
 		getCommand("register").setExecutor(new RegisterCommand(this));
 
 		FileConfiguration fc = YamlConfiguration.loadConfiguration(getArenaFile());
-		for (String s : fc.getConfigurationSection("Arenas").getKeys(false)) {
-			this.arenas.add(loadArena(s, fc));
-			System.out.println("Successfull loaded arena " + arenas.get((arenas.size() - 1)));
+		if(!fc.getConfigurationSection("Arenas").getKeys(false).isEmpty())
+		{
+			for (String s : fc.getConfigurationSection("Arenas").getKeys(false)) {
+				this.arenas.add(loadArena(s, fc));
+				System.out.println("Successfull loaded arena " + arenas.get((arenas.size() - 1)));
+			}
 		}
 
 		CommandClientBuilder builder = new CommandClientBuilder();

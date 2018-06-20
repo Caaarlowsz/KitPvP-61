@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,7 +20,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Arena {
 	private final KitPvPPlugin plugin;
-	private List<Location> spawns;
+	private List<Location> spawns = new ArrayList<Location>();
 	private List<Player> players = new ArrayList<Player>();
 	private String name;
 	private int maxPlayers;
@@ -135,24 +137,23 @@ public class Arena {
 		return maxPlayers;
 	}
 	
+	
 	public void teleportPlayers()
-	{
-		if(overFlow())
-		{
-			for(int i = players.size() - 1; i > maxPlayers; i--)
-			{
-				players.get(i).sendMessage(ChatColor.RED + "Sorry this match is currently full you have been re-added to the queue");
-				players.remove(i);
-			}
-		}
-		
-		for(int i = 0; i < players.size(); i++)
-		{
-			players.get(i).teleport(spawns.get(i));
-			plugin.queue.remove(plugin.players.get(players.get(i)));
+	  {
+	    if (overFlow()) {
+	      for (int i = this.players.size() - 1; i > this.maxPlayers; i--)
+	      {
+	        ((Player)this.players.get(i)).sendMessage(ChatColor.RED + "Sorry this match is currently full you have been re-added to the queue");
+	        this.players.remove(i);
+	      }
+	    }
+	    for (int i = 0; i < this.players.size(); i++) {
+	    	Bukkit.createWorld(new WorldCreator(this.spawns.get(i).getWorld().getName()));
+	      ((Player)this.players.get(i)).teleport((Location)this.spawns.get(i));
+	      plugin.queue.remove(plugin.players.get(players.get(i)));
 		}
 		plugin.updateSigns();
-	}
+	  }
 	
 	public void saveArena()
 	{
@@ -210,14 +211,12 @@ public class Arena {
 			
 			float pitch, 
 			yaw;
-			
-			World world;
+			World world = Bukkit.getWorld(fc.getString(path + "." + s + ".world"));
 			
 			x = fc.getInt(path + "." + s + ".x");
 			y = fc.getInt(path + "." + s + ".y");
 			z = fc.getInt(path + "." + s + ".z");
 			
-			world = plugin.getServer().getWorld(fc.getString(path + "." + s + ".world"));
 			pitch = (float) fc.getDouble(path + "." + s + ".pitch");
 			yaw = (float) fc.getDouble(path + "." + s + ".yaw");
 			locs.add(new Location(world, x, y, z, yaw, pitch));

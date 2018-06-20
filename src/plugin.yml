@@ -6,3 +6,4 @@ depend: [Vault]
 commands:
   arena:
   register:
+softdepend: [Multiverse-Core]
